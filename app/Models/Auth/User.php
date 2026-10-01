@@ -78,6 +78,14 @@ class User extends Authenticatable implements HasLocalePreference
         return $this->belongsToMany('App\Models\Common\Company', 'App\Models\Auth\UserCompany');
     }
 
+    /**
+     * Creator relation used by the native user API resource.
+     */
+    public function owner()
+    {
+        return $this->belongsTo(user_model_class(), 'created_by', 'id')->withDefault(['name' => trans('general.na')]);
+    }
+
     public function contact()
     {
         return $this->hasOne('App\Models\Common\Contact', 'user_id', 'id');
